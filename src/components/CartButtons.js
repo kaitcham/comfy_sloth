@@ -1,23 +1,32 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaShoppingCart, FaUserPlus } from 'react-icons/fa';
+import { toggleMenu } from '../features/products/productsSlice';
 
-const CartButtons = () => (
-  <Wrapper className="cart-btn-wrapper">
-    <Link to="/cart" className="cart-btn">
-      Cart
-      <span className="cart-container">
-        <FaShoppingCart />
-        <span className="cart-value">2</span>
-      </span>
-    </Link>
-    <button type="button" className="auth-btn">
-      Login
-      <FaUserPlus />
-    </button>
-  </Wrapper>
-);
+const CartButtons = () => {
+  const dispatch = useDispatch();
+  return (
+    <Wrapper className="cart-btn-wrapper">
+      <Link
+        to="/cart"
+        className="cart-btn"
+        onClick={() => dispatch(toggleMenu())}
+      >
+        Cart
+        <span className="cart-container">
+          <FaShoppingCart />
+          <span className="cart-value">2</span>
+        </span>
+      </Link>
+      <button type="button" className="auth-btn">
+        Login
+        <FaUserPlus />
+      </button>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: grid;
