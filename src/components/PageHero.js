@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const PageHero = ({ title }) => (
+const PageHero = ({ title, product }) => (
   <Wrapper>
     <div className="section-center">
       <h3>
         <Link to="/">Home</Link>
+        {product && <Link to="/products">/ Products</Link>}
         /
         {title}
       </h3>
@@ -35,6 +36,7 @@ const Wrapper = styled.section`
 
 PageHero.propTypes = {
   title: PropTypes.string.isRequired,
+  product: PropTypes.bool.isRequired,
 };
 
 export default PageHero;
