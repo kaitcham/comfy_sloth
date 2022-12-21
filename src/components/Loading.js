@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Loading = () => (
-  <div className="section section-center">
+  <div className="page-100 section section-center">
     <div className="loading" />
   </div>
 );
