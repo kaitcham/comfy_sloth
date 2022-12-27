@@ -6,7 +6,10 @@ import { fetchSingleProduct } from '../features/singleProduct/singleProductSlice
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import PageHero from '../components/PageHero';
+import Stars from '../components/Stars';
 import ProductImages from '../components/ProductImages';
+import AddToCart from '../components/AddToCart';
+import formatPrice from '../utils/helpers';
 
 const SingleProductPage = () => {
   const { id } = useParams();
@@ -27,7 +30,9 @@ const SingleProductPage = () => {
     return <Error />;
   }
 
-  const { name, images } = product;
+  const {
+    name, price, description, images, stock, stars, reviews, company,
+  } = product;
 
   return (
     <Wrapper>
@@ -38,6 +43,26 @@ const SingleProductPage = () => {
         </Link>
         <div className="product-center">
           <ProductImages images={images} />
+          <section className="content">
+            <h2>{name}</h2>
+            <Stars stars={stars} reviews={reviews} />
+            <div className="price">{formatPrice(price)}</div>
+            <p className="desc">{description}</p>
+            <p className="info">
+              <span>Available : </span>
+              {stock > 0 ? 'In stock' : 'Out of stock'}
+            </p>
+            <p className="info">
+              <span>SKU : </span>
+              {id}
+            </p>
+            <p className="info">
+              <span>Brand : </span>
+              {company}
+            </p>
+            <hr />
+            {stock > 0 && <AddToCart product={product} />}
+          </section>
         </div>
       </div>
     </Wrapper>
