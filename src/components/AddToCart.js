@@ -2,11 +2,35 @@ import React from 'react';
 import uuid from 'react-uuid';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
+import AmountButtons from './AmountButtons';
 
 const AddToCart = ({ product }) => {
-  const { colors } = product;
+  const { colors, stock } = product;
   const [mainColor, setMainColor] = React.useState(colors[0]);
+  const [amount, setAmount] = React.useState(1);
+
+  const increaseAmount = () => {
+    setAmount((oldAmount) => {
+      let currentAmount = oldAmount + 1;
+      if (currentAmount > stock) {
+        currentAmount = stock;
+      }
+      return currentAmount;
+    });
+  };
+
+  const decreaseAmount = () => {
+    setAmount((oldAmount) => {
+      let currentAmount = oldAmount - 1;
+      if (currentAmount < 1) {
+        currentAmount = 1;
+      }
+      return currentAmount;
+    });
+  };
+
   return (
     <Wrapper>
       <div className="colors">
@@ -26,6 +50,16 @@ const AddToCart = ({ product }) => {
             </button>
           ))}
         </div>
+      </div>
+      <div className="btn-container">
+        <AmountButtons
+          amount={amount}
+          increaseAmount={increaseAmount}
+          decreaseAmount={decreaseAmount}
+        />
+        <Link to="/cart" className="btn">
+          add to cart
+        </Link>
       </div>
     </Wrapper>
   );
@@ -81,6 +115,7 @@ AddToCart.propTypes = {
   product: propTypes.shape({
     id: propTypes.string.isRequired,
     colors: propTypes.arrayOf(propTypes.shape({})).isRequired,
+    stock: propTypes.number.isRequired,
   }).isRequired,
 };
 
