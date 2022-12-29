@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchProducts } from '../products/productsSlice';
 
 const initialState = {
   gridView: true,
@@ -15,23 +16,20 @@ export const filteredProductsSlice = createSlice({
       state.filteredProducts = action.payload;
     },
   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase('products/fetchProducts/fulfilled', (state, action) => {
-  //         state.allProducts = action.payload;
-  //         state.filteredProducts = action.payload;
-  //       })
-  //       .addCase('products/fetchProducts/rejected', (state, action) => {
-  //         state.error = action.error.message;
-  //       });
-  //   },
 });
 
 const { setProducts } = filteredProductsSlice.actions;
 
-export const getProducts = () => (dispatch, getState) => {
-  const value = getState().products.products;
-  dispatch(setProducts(value));
+export const getProducts = () => async (dispatch, getState) => {
+  const { products } = getState().products;
+  const { allProducts } = getState().filteredProducts;
+
+  if (products.length > 0 && allProducts.length === 0) {
+    dispatch(setProducts(products));
+  } else {
+    const { payload } = await dispatch(fetchProducts());
+    dispatch(setProducts(payload));
+  }
 };
 
 export default filteredProductsSlice.reducer;
