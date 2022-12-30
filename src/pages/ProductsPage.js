@@ -24,7 +24,7 @@ const ProductsPage = () => {
         <div className="section-center products">
           <Filters />
           <div>
-            <Sort />
+            <Sort gridView={gridView} products={products} />
             <ProductsList gridView={gridView} products={products} />
           </div>
         </div>
