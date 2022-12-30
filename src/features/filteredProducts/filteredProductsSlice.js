@@ -11,6 +11,12 @@ export const filteredProductsSlice = createSlice({
   name: 'filteredProducts',
   initialState,
   reducers: {
+    setGridView: (state) => {
+      state.gridView = true;
+    },
+    setListView: (state) => {
+      state.gridView = false;
+    },
     setProducts: (state, action) => {
       state.allProducts = action.payload;
       state.filteredProducts = action.payload;
@@ -18,7 +24,9 @@ export const filteredProductsSlice = createSlice({
   },
 });
 
-const { setProducts } = filteredProductsSlice.actions;
+export const {
+  setGridView, setListView, setProducts, updateSort,
+} = filteredProductsSlice.actions;
 
 export const getProducts = () => async (dispatch, getState) => {
   const { products } = getState().products;
