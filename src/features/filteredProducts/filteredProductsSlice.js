@@ -5,6 +5,7 @@ const initialState = {
   gridView: true,
   allProducts: [],
   filteredProducts: [],
+  sort: 'price-lowest',
 };
 
 export const filteredProductsSlice = createSlice({
@@ -20,6 +21,24 @@ export const filteredProductsSlice = createSlice({
     setProducts: (state, action) => {
       state.allProducts = action.payload;
       state.filteredProducts = action.payload;
+    },
+    updateSort: (state, action) => {
+      state.sort = action.payload;
+      state.filteredProducts = state.filteredProducts.sort((a, b) => {
+        if (state.sort === 'price-lowest') {
+          return a.price - b.price;
+        }
+        if (state.sort === 'price-highest') {
+          return b.price - a.price;
+        }
+        if (state.sort === 'name-a') {
+          return a.name.localeCompare(b.name);
+        }
+        if (state.sort === 'name-z') {
+          return b.name.localeCompare(a.name);
+        }
+        return a;
+      });
     },
   },
 });
