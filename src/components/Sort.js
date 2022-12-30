@@ -6,6 +6,7 @@ import { BsFillGridFill, BsList } from 'react-icons/bs';
 import {
   setGridView,
   setListView,
+  updateSort,
 } from '../features/filteredProducts/filteredProductsSlice';
 
 const Sort = ({ gridView, products }) => {
@@ -35,6 +36,21 @@ const Sort = ({ gridView, products }) => {
         <span>products found</span>
       </p>
       <hr />
+      <form>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label htmlFor="sort">sort by:</label>
+        <select
+          name="sort"
+          id="sort"
+          className="sort-input"
+          onChange={(e) => dispatch(updateSort(e.target.value))}
+        >
+          <option value="price-lowest">price (lowest)</option>
+          <option value="price-highest">price (highest)</option>
+          <option value="name-a">name (a-z)</option>
+          <option value="name-z">name (z-a)</option>
+        </select>
+      </form>
     </Wrapper>
   );
 };
