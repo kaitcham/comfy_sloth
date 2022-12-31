@@ -6,6 +6,9 @@ const initialState = {
   allProducts: [],
   filteredProducts: [],
   sort: 'price-lowest',
+  filters: {
+    text: '',
+  },
 };
 
 export const filteredProductsSlice = createSlice({
@@ -40,11 +43,30 @@ export const filteredProductsSlice = createSlice({
         return a;
       });
     },
+    updateFilters: (state, action) => {
+      const name = Object.keys(action.payload)[0];
+      const value = Object.values(action.payload)[0];
+      state.filters[name] = value;
+
+      state.filteredProducts = state.allProducts.filter((product) => {
+        if (
+          state.filters.text
+          && !product.name.toLowerCase().startsWith(state.filters.text)
+        ) {
+          return false;
+        }
+        return true;
+      });
+    },
   },
 });
 
 export const {
-  setGridView, setListView, setProducts, updateSort,
+  setGridView,
+  setListView,
+  setProducts,
+  updateSort,
+  updateFilters,
 } = filteredProductsSlice.actions;
 
 export const getProducts = () => async (dispatch, getState) => {
