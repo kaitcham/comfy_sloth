@@ -9,7 +9,7 @@ import { getProducts } from '../features/filteredProducts/filteredProductsSlice'
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
-  const { gridView, filteredProducts: products } = useSelector(
+  const { gridView, allProducts, filteredProducts } = useSelector(
     (state) => state.filteredProducts,
   );
 
@@ -24,8 +24,12 @@ const ProductsPage = () => {
         <div className="section-center products">
           <Filters />
           <div>
-            <Sort gridView={gridView} products={products} />
-            <ProductsList gridView={gridView} products={products} />
+            <Sort gridView={gridView} filteredProducts={filteredProducts} />
+            <ProductsList
+              gridView={gridView}
+              allProducts={allProducts}
+              filteredProducts={filteredProducts}
+            />
           </div>
         </div>
       </Wrapper>
