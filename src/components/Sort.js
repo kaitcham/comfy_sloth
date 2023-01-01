@@ -9,7 +9,7 @@ import {
   updateSort,
 } from '../features/filteredProducts/filteredProductsSlice';
 
-const Sort = ({ gridView, products }) => {
+const Sort = ({ gridView, filteredProducts }) => {
   const dispatch = useDispatch();
 
   return (
@@ -31,7 +31,7 @@ const Sort = ({ gridView, products }) => {
         </button>
       </div>
       <p>
-        {products.length}
+        {filteredProducts.length}
         {' '}
         <span>products found</span>
       </p>
@@ -45,10 +45,10 @@ const Sort = ({ gridView, products }) => {
           className="sort-input"
           onChange={(e) => dispatch(updateSort(e.target.value))}
         >
-          <option value="price-lowest">price (lowest)</option>
-          <option value="price-highest">price (highest)</option>
           <option value="name-a">name (a-z)</option>
           <option value="name-z">name (z-a)</option>
+          <option value="price-lowest">price (lowest)</option>
+          <option value="price-highest">price (highest)</option>
         </select>
       </form>
     </Wrapper>
@@ -120,7 +120,7 @@ const Wrapper = styled.section`
 
 Sort.propTypes = {
   gridView: propTypes.bool.isRequired,
-  products: propTypes.arrayOf(propTypes.shape({})).isRequired,
+  filteredProducts: propTypes.arrayOf(propTypes.shape({})).isRequired,
 };
 
 export default Sort;
