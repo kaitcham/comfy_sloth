@@ -3,10 +3,10 @@ import propTypes from 'prop-types';
 import styled from 'styled-components';
 import Product from './Product';
 
-const GridView = ({ products }) => (
+const GridView = ({ filteredProducts }) => (
   <Wrapper>
     <div className="products-container">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <Product key={product.id} product={product} />
       ))}
     </div>
@@ -36,7 +36,7 @@ const Wrapper = styled.section`
 `;
 
 GridView.propTypes = {
-  products: propTypes.arrayOf(propTypes.shape({})).isRequired,
+  filteredProducts: propTypes.arrayOf(propTypes.shape({})).isRequired,
 };
 
 export default GridView;
