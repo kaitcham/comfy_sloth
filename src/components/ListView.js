@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import formatPrice from '../utils/helpers';
 
-const ListView = ({ products }) => (
+const ListView = ({ filteredProducts }) => (
   <Wrapper>
-    {products.map((product) => {
+    {filteredProducts.map((product) => {
       const {
         id, image, name, price, description,
       } = product;
@@ -69,7 +69,7 @@ const Wrapper = styled.section`
 `;
 
 ListView.propTypes = {
-  products: propTypes.arrayOf(propTypes.shape({})).isRequired,
+  filteredProducts: propTypes.arrayOf(propTypes.shape({})).isRequired,
 };
 
 export default ListView;
