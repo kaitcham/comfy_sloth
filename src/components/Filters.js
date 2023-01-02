@@ -1,13 +1,16 @@
 import React from 'react';
 import uuid from 'react-uuid';
 import styled from 'styled-components';
+import { FaCheck } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUniqueValues } from '../utils/helpers';
 import { updateFilters } from '../features/filteredProducts/filteredProductsSlice';
 
 const Filters = () => {
   const {
-    filters: { text, category, company },
+    filters: {
+      text, category, company, color,
+    },
     allProducts,
   } = useSelector((state) => state.filteredProducts);
 
@@ -15,6 +18,7 @@ const Filters = () => {
 
   const categories = getUniqueValues(allProducts, 'category');
   const companies = getUniqueValues(allProducts, 'company');
+  const colors = getUniqueValues(allProducts, 'colors');
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -24,8 +28,14 @@ const Filters = () => {
 
   const handleClick = (e) => {
     const { name } = e.target;
-    const value = e.target.innerText;
-    dispatch(updateFilters({ [name]: value.toLowerCase() }));
+    if (name === 'category') {
+      const value = e.target.innerText;
+      dispatch(updateFilters({ [name]: value.toLowerCase() }));
+    }
+    if (name === 'color') {
+      const value = e.target.dataset.color;
+      dispatch(updateFilters({ [name]: value.toLowerCase() }));
+    }
   };
 
   return (
@@ -74,6 +84,44 @@ const Filters = () => {
               </option>
             ))}
           </select>
+        </div>
+        <div className="form-control">
+          <h5>colors</h5>
+          <div className="colors">
+            {colors.map((col) => {
+              if (col === 'all') {
+                return (
+                  <button
+                    key={uuid()}
+                    name="color"
+                    type="button"
+                    onClick={handleClick}
+                    data-color="all"
+                    className={`${
+                      color === 'all' ? 'all-btn active' : 'all-btn'
+                    }`}
+                  >
+                    all
+                  </button>
+                );
+              }
+              return (
+                <button
+                  key={uuid()}
+                  name="color"
+                  type="button"
+                  style={{ background: col }}
+                  className={`${
+                    color === col ? 'color-btn active' : 'color-btn'
+                  }`}
+                  data-color={col}
+                  onClick={handleClick}
+                >
+                  {color === col ? <FaCheck /> : null}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </Wrapper>
