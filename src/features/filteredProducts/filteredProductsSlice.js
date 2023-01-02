@@ -92,6 +92,19 @@ export const filteredProductsSlice = createSlice({
 
       state.filteredProducts = tempProducts;
     },
+    clearFilters: (state) => {
+      state.filters = {
+        text: '',
+        category: 'all',
+        company: 'all',
+        color: 'all',
+        price: state.filters.maxPrice,
+        minPrice: 0,
+        maxPrice: state.filters.maxPrice,
+        shipping: false,
+      };
+      state.filteredProducts = state.allProducts;
+    },
   },
 });
 
@@ -101,6 +114,7 @@ export const {
   setProducts,
   updateSort,
   updateFilters,
+  clearFilters,
 } = filteredProductsSlice.actions;
 
 export const getProducts = () => async (dispatch, getState) => {
