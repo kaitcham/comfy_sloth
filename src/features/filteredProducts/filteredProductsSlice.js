@@ -11,6 +11,9 @@ const initialState = {
     category: 'all',
     company: 'all',
     color: 'all',
+    price: 0,
+    minPrice: 0,
+    maxPrice: 0,
   },
 };
 
@@ -27,6 +30,9 @@ export const filteredProductsSlice = createSlice({
     setProducts: (state, action) => {
       state.allProducts = action.payload;
       state.filteredProducts = action.payload;
+      const maxPrice = Math.max(...action.payload.map((item) => item.price));
+      state.filters.maxPrice = maxPrice;
+      state.filters.price = maxPrice;
     },
     updateSort: (state, action) => {
       state.sort = action.payload;
@@ -52,7 +58,7 @@ export const filteredProductsSlice = createSlice({
       const value = Object.values(action.payload)[0];
       state.filters[name] = value;
       const {
-        text, category, company, color,
+        text, category, company, color, price,
       } = state.filters;
 
       if (text) {
@@ -73,6 +79,10 @@ export const filteredProductsSlice = createSlice({
 
       if (color !== 'all') {
         tempProducts = tempProducts.filter((product) => product.colors.find((c) => c === color));
+      }
+
+      if (price) {
+        tempProducts = tempProducts.filter((product) => product.price <= price);
       }
 
       state.filteredProducts = tempProducts;
