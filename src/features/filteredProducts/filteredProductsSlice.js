@@ -8,6 +8,7 @@ const initialState = {
   sort: 'price-lowest',
   filters: {
     text: '',
+    category: 'all',
   },
 };
 
@@ -44,19 +45,23 @@ export const filteredProductsSlice = createSlice({
       });
     },
     updateFilters: (state, action) => {
+      let tempProducts = [...state.allProducts];
       const name = Object.keys(action.payload)[0];
       const value = Object.values(action.payload)[0];
       state.filters[name] = value;
+      const { text, category } = state.filters;
 
-      state.filteredProducts = state.allProducts.filter((product) => {
-        if (
-          state.filters.text
-          && !product.name.toLowerCase().startsWith(state.filters.text)
-        ) {
-          return false;
-        }
-        return true;
-      });
+      if (text) {
+        tempProducts = tempProducts.filter((product) => product.name.startsWith(text));
+      }
+
+      if (category !== 'all') {
+        tempProducts = tempProducts.filter(
+          (product) => product.category === category,
+        );
+      }
+
+      state.filteredProducts = tempProducts;
     },
   },
 });
