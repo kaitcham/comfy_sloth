@@ -7,13 +7,14 @@ import { updateFilters } from '../features/filteredProducts/filteredProductsSlic
 
 const Filters = () => {
   const {
-    filters: { text, category },
+    filters: { text, category, company },
     allProducts,
   } = useSelector((state) => state.filteredProducts);
 
   const dispatch = useDispatch();
 
   const categories = getUniqueValues(allProducts, 'category');
+  const companies = getUniqueValues(allProducts, 'company');
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -58,6 +59,21 @@ const Filters = () => {
               </button>
             ))}
           </div>
+        </div>
+        <div className="form-control">
+          <h5>company</h5>
+          <select
+            name="company"
+            value={company}
+            className="company"
+            onChange={handleChange}
+          >
+            {companies.map((comp) => (
+              <option key={uuid()} value={comp}>
+                {comp}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </Wrapper>
