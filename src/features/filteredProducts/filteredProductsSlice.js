@@ -14,6 +14,7 @@ const initialState = {
     price: 0,
     minPrice: 0,
     maxPrice: 0,
+    shipping: false,
   },
 };
 
@@ -58,7 +59,7 @@ export const filteredProductsSlice = createSlice({
       const value = Object.values(action.payload)[0];
       state.filters[name] = value;
       const {
-        text, category, company, color, price,
+        text, category, company, color, price, shipping,
       } = state.filters;
 
       if (text) {
@@ -83,6 +84,10 @@ export const filteredProductsSlice = createSlice({
 
       if (price) {
         tempProducts = tempProducts.filter((product) => product.price <= price);
+      }
+
+      if (shipping) {
+        tempProducts = tempProducts.filter((product) => product.shipping);
       }
 
       state.filteredProducts = tempProducts;
