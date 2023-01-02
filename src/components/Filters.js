@@ -9,7 +9,14 @@ import { updateFilters } from '../features/filteredProducts/filteredProductsSlic
 const Filters = () => {
   const {
     filters: {
-      text, category, company, color, price, minPrice, maxPrice,
+      text,
+      category,
+      company,
+      color,
+      price,
+      minPrice,
+      maxPrice,
+      shipping,
     },
     allProducts,
   } = useSelector((state) => state.filteredProducts);
@@ -22,14 +29,16 @@ const Filters = () => {
 
   const handleChange = (e) => {
     const { name } = e.target;
-    if (name === 'text') {
-      const { value } = e.target;
-      dispatch(updateFilters({ [name]: value.toLowerCase() }));
-    }
+    const { value } = e.target;
     if (name === 'price') {
       const value = Number(e.target.value);
       dispatch(updateFilters({ [name]: value }));
     }
+    if (name === 'shipping') {
+      const value = e.target.checked;
+      dispatch(updateFilters({ [name]: value }));
+    }
+    dispatch(updateFilters({ [name]: value.toLowerCase() }));
   };
 
   const handleClick = (e) => {
@@ -141,6 +150,16 @@ const Filters = () => {
             onChange={handleChange}
           />
         </div>
+        <div className="form-control shipping">
+          <span>free shipping</span>
+          <input
+            id="shipping"
+            type="checkbox"
+            name="shipping"
+            checked={shipping}
+            onChange={handleChange}
+          />
+        </div>
       </div>
     </Wrapper>
   );
@@ -224,13 +243,14 @@ const Wrapper = styled.section`
     margin-bottom: 0.25rem;
   }
   .shipping {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
     align-items: center;
     text-transform: capitalize;
     column-gap: 0.5rem;
     font-size: 1rem;
-    max-width: 200px;
+    input {
+      margin-top: 3px;
+    }
   }
   .clear-btn {
     background: var(--clr-red-dark);
