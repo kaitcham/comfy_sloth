@@ -10,6 +10,7 @@ const initialState = {
     text: '',
     category: 'all',
     company: 'all',
+    color: 'all',
   },
 };
 
@@ -50,7 +51,9 @@ export const filteredProductsSlice = createSlice({
       const name = Object.keys(action.payload)[0];
       const value = Object.values(action.payload)[0];
       state.filters[name] = value;
-      const { text, category, company } = state.filters;
+      const {
+        text, category, company, color,
+      } = state.filters;
 
       if (text) {
         tempProducts = tempProducts.filter((product) => product.name.startsWith(text));
@@ -66,6 +69,10 @@ export const filteredProductsSlice = createSlice({
         tempProducts = tempProducts.filter(
           (product) => product.company === company,
         );
+      }
+
+      if (color !== 'all') {
+        tempProducts = tempProducts.filter((product) => product.colors.find((c) => c === color));
       }
 
       state.filteredProducts = tempProducts;
