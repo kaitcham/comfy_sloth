@@ -1,19 +1,30 @@
 import React from 'react';
+import uuid from 'react-uuid';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { getUniqueValues } from '../utils/helpers';
 import { updateFilters } from '../features/filteredProducts/filteredProductsSlice';
 
 const Filters = () => {
   const {
-    filters: { text },
+    filters: { text, category },
+    allProducts,
   } = useSelector((state) => state.filteredProducts);
 
   const dispatch = useDispatch();
 
+  const categories = getUniqueValues(allProducts, 'category');
+
   const handleChange = (e) => {
     const { name } = e.target;
     const { value } = e.target;
-    dispatch(updateFilters({ [name]: value }));
+    dispatch(updateFilters({ [name]: value.toLowerCase() }));
+  };
+
+  const handleClick = (e) => {
+    const { name } = e.target;
+    const value = e.target.innerText;
+    dispatch(updateFilters({ [name]: value.toLowerCase() }));
   };
 
   return (
@@ -32,6 +43,22 @@ const Filters = () => {
             />
           </div>
         </form>
+        <div className="form-control">
+          <h5>category</h5>
+          <div>
+            {categories.map((cat) => (
+              <button
+                type="button"
+                name="category"
+                key={uuid()}
+                onClick={handleClick}
+                className={`${cat === category ? 'active' : null}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </Wrapper>
   );
