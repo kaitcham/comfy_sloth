@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import { FaCheck } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import formatPrice, { getUniqueValues } from '../utils/helpers';
-import { updateFilters } from '../features/filteredProducts/filteredProductsSlice';
+import {
+  updateFilters,
+  clearFilters,
+} from '../features/filteredProducts/filteredProductsSlice';
 
 const Filters = () => {
   const {
@@ -160,6 +163,13 @@ const Filters = () => {
             onChange={handleChange}
           />
         </div>
+        <button
+          type="button"
+          className="clear-btn"
+          onClick={() => dispatch(clearFilters())}
+        >
+          clear filters
+        </button>
       </div>
     </Wrapper>
   );
