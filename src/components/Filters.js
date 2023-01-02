@@ -3,13 +3,13 @@ import uuid from 'react-uuid';
 import styled from 'styled-components';
 import { FaCheck } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUniqueValues } from '../utils/helpers';
+import formatPrice, { getUniqueValues } from '../utils/helpers';
 import { updateFilters } from '../features/filteredProducts/filteredProductsSlice';
 
 const Filters = () => {
   const {
     filters: {
-      text, category, company, color,
+      text, category, company, color, price, minPrice, maxPrice,
     },
     allProducts,
   } = useSelector((state) => state.filteredProducts);
@@ -22,8 +22,14 @@ const Filters = () => {
 
   const handleChange = (e) => {
     const { name } = e.target;
-    const { value } = e.target;
-    dispatch(updateFilters({ [name]: value.toLowerCase() }));
+    if (name === 'text') {
+      const { value } = e.target;
+      dispatch(updateFilters({ [name]: value.toLowerCase() }));
+    }
+    if (name === 'price') {
+      const value = Number(e.target.value);
+      dispatch(updateFilters({ [name]: value }));
+    }
   };
 
   const handleClick = (e) => {
@@ -122,6 +128,18 @@ const Filters = () => {
               );
             })}
           </div>
+        </div>
+        <div className="form-control">
+          <h5>price</h5>
+          <p className="price">{formatPrice(price)}</p>
+          <input
+            type="range"
+            name="price"
+            value={price}
+            min={minPrice}
+            max={maxPrice}
+            onChange={handleChange}
+          />
         </div>
       </div>
     </Wrapper>
