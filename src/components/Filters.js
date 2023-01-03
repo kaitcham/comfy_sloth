@@ -3,6 +3,7 @@ import uuid from 'react-uuid';
 import styled from 'styled-components';
 import { FaCheck } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
+import { MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
 import formatPrice, { getUniqueValues } from '../utils/helpers';
 import {
   updateFilters,
@@ -25,6 +26,8 @@ const Filters = () => {
   } = useSelector((state) => state.filteredProducts);
 
   const dispatch = useDispatch();
+
+  const [showCategories, setShowCategories] = React.useState(false);
 
   const categories = getUniqueValues(allProducts, 'category');
   const companies = getUniqueValues(allProducts, 'company');
@@ -73,20 +76,29 @@ const Filters = () => {
           </div>
         </form>
         <div className="form-control">
-          <h5>category</h5>
-          <div>
-            {categories.map((cat) => (
-              <button
-                type="button"
-                name="category"
-                key={uuid()}
-                onClick={handleClick}
-                className={`${cat === category ? 'active' : null}`}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="categories">
+            <h5>categories</h5>
+            {showCategories ? (
+              <MdKeyboardArrowDown onClick={() => setShowCategories(false)} />
+            ) : (
+              <MdKeyboardArrowRight onClick={() => setShowCategories(true)} />
+            )}
           </div>
+          {showCategories && (
+            <div>
+              {categories.map((cat) => (
+                <button
+                  type="button"
+                  name="category"
+                  key={uuid()}
+                  onClick={handleClick}
+                  className={`${cat === category ? 'active' : null}`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="form-control">
           <h5>company</h5>
@@ -183,6 +195,7 @@ const Wrapper = styled.section`
     }
   }
   .search-input {
+    width: 100%;
     padding: 0.5rem;
     background: var(--clr-grey-10);
     border-radius: var(--radius);
@@ -191,6 +204,15 @@ const Wrapper = styled.section`
   }
   .search-input::placeholder {
     text-transform: capitalize;
+  }
+
+  .categories {
+    display: flex;
+    justify-content: space-between;
+    svg {
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
   }
 
   button {
