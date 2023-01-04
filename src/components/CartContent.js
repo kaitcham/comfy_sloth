@@ -2,28 +2,37 @@ import React from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import CartColumns from './CartColumns';
 import CartItem from './CartItem';
 import CartTotals from './CartTotals';
+import { clearCart } from '../features/cart/cartSlice';
 
-const CartContent = ({ cart }) => (
-  <Wrapper className="section section-center">
-    <CartColumns />
-    {cart.map((item) => (
-      <CartItem key={item.id} item={item} />
-    ))}
-    <hr />
-    <div className="link-container">
-      <Link to="/products" className="link-btn">
-        continue shopping
-      </Link>
-      <button type="button" className="link-btn clear-btn">
-        clear cart
-      </button>
-    </div>
-    <CartTotals />
-  </Wrapper>
-);
+const CartContent = ({ cart }) => {
+  const dispatch = useDispatch();
+  return (
+    <Wrapper className="section section-center">
+      <CartColumns />
+      {cart.map((item) => (
+        <CartItem key={item.id} item={item} />
+      ))}
+      <hr />
+      <div className="link-container">
+        <Link to="/products" className="link-btn">
+          continue shopping
+        </Link>
+        <button
+          type="button"
+          className="link-btn clear-btn"
+          onClick={() => dispatch(clearCart())}
+        >
+          clear cart
+        </button>
+      </div>
+      <CartTotals />
+    </Wrapper>
+  );
+};
 const Wrapper = styled.section`
   .link-container {
     display: flex;
