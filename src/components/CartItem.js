@@ -2,10 +2,13 @@ import React from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 import formatPrice from '../utils/helpers';
 import AmountButtons from './AmountButtons';
+import { removeCartItem } from '../features/cart/cartSlice';
 
 const CartItem = ({ item }) => {
+  const dispatch = useDispatch();
   const {
     id, name, image, price, color, amount,
   } = item;
@@ -24,9 +27,13 @@ const CartItem = ({ item }) => {
         </div>
       </div>
       <h5 className="price">{formatPrice(price)}</h5>
-      <AmountButtons id={id} amount={amount} />
+      <AmountButtons amount={amount} />
       <h5 className="subtotal">{formatPrice(price * amount)}</h5>
-      <button type="button" className="remove-btn">
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => dispatch(removeCartItem(id))}
+      >
         <FaTrash />
       </button>
     </Wrapper>
