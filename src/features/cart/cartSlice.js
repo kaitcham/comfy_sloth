@@ -51,6 +51,30 @@ export const cartSlice = createSlice({
         localStorage.setItem('cart', JSON.stringify(state.cart));
       }
     },
+    toggleAmount: (state, action) => {
+      const { id, value } = action.payload;
+      const newCart = state.cart.map((item) => {
+        if (item.id === id) {
+          if (value === 'inc') {
+            let newAmount = item.amount + 1;
+            if (newAmount > item.max) {
+              newAmount = item.max;
+            }
+            return { ...item, amount: newAmount };
+          }
+          if (value === 'dec') {
+            let newAmount = item.amount - 1;
+            if (newAmount < 1) {
+              newAmount = 1;
+            }
+            return { ...item, amount: newAmount };
+          }
+        }
+        return item;
+      });
+      state.cart = newCart;
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
     removeCartItem: (state, action) => {
       const id = action.payload;
       const newCart = state.cart.filter((item) => item.id !== id);
@@ -64,6 +88,8 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeCartItem, clearCart } = cartSlice.actions;
+export const {
+  addToCart, toggleAmount, removeCartItem, clearCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
