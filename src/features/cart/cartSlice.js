@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const getLocalStorage = () => {
+  const cart = localStorage.getItem('cart');
+  if (cart) {
+    return JSON.parse(cart);
+  }
+  return [];
+};
+
 const initialState = {
-  cart: [],
+  cart: getLocalStorage(),
   totalItems: 0,
   totalAmount: 0,
 };
@@ -27,6 +35,7 @@ export const cartSlice = createSlice({
           return item;
         });
         state.cart = newCart;
+        localStorage.setItem('cart', JSON.stringify(state.cart));
       } else {
         const newItem = {
           id: id + color,
@@ -38,6 +47,7 @@ export const cartSlice = createSlice({
           image: product.images[0].url,
         };
         state.cart = [...state.cart, newItem];
+        localStorage.setItem('cart', JSON.stringify(state.cart));
       }
     },
   },
