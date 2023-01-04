@@ -12,6 +12,7 @@ const initialState = {
   cart: getLocalStorage(),
   totalItems: 0,
   totalAmount: 0,
+  shippingFee: 535,
 };
 
 export const cartSlice = createSlice({
@@ -50,9 +51,15 @@ export const cartSlice = createSlice({
         localStorage.setItem('cart', JSON.stringify(state.cart));
       }
     },
+    removeCartItem: (state, action) => {
+      const id = action.payload;
+      const newCart = state.cart.filter((item) => item.id !== id);
+      state.cart = newCart;
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeCartItem } = cartSlice.actions;
 
 export default cartSlice.reducer;
