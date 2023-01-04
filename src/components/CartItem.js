@@ -5,13 +5,21 @@ import { FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import formatPrice from '../utils/helpers';
 import AmountButtons from './AmountButtons';
-import { removeCartItem } from '../features/cart/cartSlice';
+import { toggleAmount, removeCartItem } from '../features/cart/cartSlice';
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   const {
     id, name, image, price, color, amount,
   } = item;
+
+  const increaseAmount = () => {
+    dispatch(toggleAmount({ id, value: 'inc' }));
+  };
+
+  const decreaseAmount = () => {
+    dispatch(toggleAmount({ id, value: 'dec' }));
+  };
   return (
     <Wrapper>
       <div className="title">
@@ -27,7 +35,11 @@ const CartItem = ({ item }) => {
         </div>
       </div>
       <h5 className="price">{formatPrice(price)}</h5>
-      <AmountButtons amount={amount} />
+      <AmountButtons
+        amount={amount}
+        decreaseAmount={decreaseAmount}
+        increaseAmount={increaseAmount}
+      />
       <h5 className="subtotal">{formatPrice(price * amount)}</h5>
       <button
         type="button"
@@ -178,7 +190,7 @@ const Wrapper = styled.article`
 
 CartItem.propTypes = {
   item: propTypes.shape({
-    id: propTypes.number.isRequired,
+    id: propTypes.string.isRequired,
     name: propTypes.string.isRequired,
     image: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
