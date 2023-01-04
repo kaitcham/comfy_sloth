@@ -4,12 +4,15 @@ import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 import AmountButtons from './AmountButtons';
+import { addToCart } from '../features/cart/cartSlice';
 
 const AddToCart = ({ product }) => {
-  const { colors, stock } = product;
-  const [mainColor, setMainColor] = React.useState(colors[0]);
+  const dispatch = useDispatch();
+  const { id, colors, stock } = product;
   const [amount, setAmount] = React.useState(1);
+  const [mainColor, setMainColor] = React.useState(colors[0]);
 
   const increaseAmount = () => {
     setAmount((oldAmount) => {
@@ -57,7 +60,13 @@ const AddToCart = ({ product }) => {
           increaseAmount={increaseAmount}
           decreaseAmount={decreaseAmount}
         />
-        <Link to="/cart" className="btn">
+        <Link
+          to="/cart"
+          className="btn"
+          onClick={() => dispatch(addToCart({
+            id, color: mainColor, amount, product,
+          }))}
+        >
           add to cart
         </Link>
       </div>
