@@ -1,12 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { FaShoppingCart, FaUserPlus } from 'react-icons/fa';
+import useTotals from '../customHooks/useTotals';
 import { toggleMenu } from '../features/products/productsSlice';
 
 const CartButtons = () => {
   const dispatch = useDispatch();
+  const { totalItems } = useTotals();
+
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link
@@ -17,7 +20,7 @@ const CartButtons = () => {
         Cart
         <span className="cart-container">
           <FaShoppingCart />
-          <span className="cart-value">2</span>
+          <span className="cart-value">{totalItems}</span>
         </span>
       </Link>
       <button type="button" className="auth-btn">
