@@ -2,13 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { FaShoppingCart, FaUserPlus } from 'react-icons/fa';
+import { useAuth0 } from '@auth0/auth0-react';
+import { FaShoppingCart, FaUserPlus, FaUserMinus } from 'react-icons/fa';
 import useTotals from '../customHooks/useTotals';
 import { toggleMenu } from '../features/products/productsSlice';
 
 const CartButtons = () => {
   const dispatch = useDispatch();
   const { totalItems } = useTotals();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
     <Wrapper className="cart-btn-wrapper">
@@ -23,10 +25,23 @@ const CartButtons = () => {
           <span className="cart-value">{totalItems}</span>
         </span>
       </Link>
-      <button type="button" className="auth-btn">
-        Login
-        <FaUserPlus />
-      </button>
+      {isAuthenticated ? (
+        <button
+          type="button"
+          className="auth-btn"
+          onClick={() => {
+            logout({ returnTo: window.location.origin });
+          }}
+        >
+          Logout
+          <FaUserMinus />
+        </button>
+      ) : (
+        <button type="button" className="auth-btn" onClick={loginWithRedirect}>
+          Login
+          <FaUserPlus />
+        </button>
+      )}
     </Wrapper>
   );
 };
