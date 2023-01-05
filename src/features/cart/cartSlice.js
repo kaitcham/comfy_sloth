@@ -19,6 +19,16 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    getTotals: (state) => {
+      state.totalItems = state.cart.reduce(
+        (total, item) => total + item.amount,
+        0,
+      );
+      state.totalAmount = state.cart.reduce(
+        (total, item) => total + item.amount * item.price,
+        0,
+      );
+    },
     addToCart: (state, action) => {
       const {
         id, color, amount, product,
@@ -89,7 +99,24 @@ export const cartSlice = createSlice({
 });
 
 export const {
-  addToCart, toggleAmount, removeCartItem, clearCart,
+  getTotals, addToCart, toggleAmount, removeCartItem, clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+// getTotals: (state) => {
+//       const { totalItems, totalAmount } = state.cart.reduce(
+//         (total, cartItem) => {
+//           const { amount, price } = cartItem;
+//           total.totalItems += amount;
+//           total.totalAmount += price * amount;
+//           return total;
+//         },
+//         {
+//           totalItems: 0,
+//           totalAmount: 0,
+//         }
+//       );
+//       state.totalItems = totalItems;
+//       state.totalAmount = totalAmount;
+//     },
