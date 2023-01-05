@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import formatPrice from '../utils/helpers';
+import useTotals from '../customHooks/useTotals';
 
 const CartTotals = () => {
-  const { totalAmount, shippingFee } = useSelector((state) => state.cart);
+  const { totalAmount, shippingFee } = useTotals();
+
   return (
     <Wrapper>
       <div>
