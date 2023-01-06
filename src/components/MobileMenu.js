@@ -3,14 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
+import { useAuth0 } from '@auth0/auth0-react';
 import logo from '../assets/logo.svg';
 import links from '../utils/constants';
 import CartButtons from './CartButtons';
 import { toggleMenu } from '../features/products/productsSlice';
 
 const Sidebar = () => {
-  const isMenuOpen = useSelector((state) => state.products.isMenuOpen);
+  const { user } = useAuth0();
   const dispatch = useDispatch();
+  const isMenuOpen = useSelector((state) => state.products.isMenuOpen);
   return (
     <SidebarContainer>
       <aside className={isMenuOpen ? 'sidebar show-sidebar' : 'sidebar'}>
@@ -35,6 +37,13 @@ const Sidebar = () => {
               </li>
             );
           })}
+          {user && (
+            <li>
+              <Link to="/checkout" onClick={() => dispatch(toggleMenu())}>
+                checkout
+              </Link>
+            </li>
+          )}
         </ul>
         <CartButtons />
       </aside>
