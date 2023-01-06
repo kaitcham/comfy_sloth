@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
+import { useAuth0 } from '@auth0/auth0-react';
 import logo from '../assets/logo.svg';
 import links from '../utils/constants';
 import CartButtons from './CartButtons';
@@ -10,6 +11,7 @@ import { toggleMenu } from '../features/products/productsSlice';
 
 const Nav = () => {
   const dispatch = useDispatch();
+  const { user } = useAuth0();
   return (
     <NavContainer>
       <div className="nav-center">
@@ -34,6 +36,11 @@ const Nav = () => {
               </li>
             );
           })}
+          {user && (
+            <li>
+              <Link to="/checkout">checkout</Link>
+            </li>
+          )}
         </ul>
         <CartButtons />
       </div>
