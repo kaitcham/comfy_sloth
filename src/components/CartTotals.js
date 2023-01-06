@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import formatPrice from '../utils/helpers';
 import useTotals from '../customHooks/useTotals';
 
 const CartTotals = () => {
+  const { user, loginWithRedirect } = useAuth0();
   const { totalAmount, shippingFee } = useTotals();
 
   return (
@@ -28,9 +30,15 @@ const CartTotals = () => {
             <span>{formatPrice(totalAmount + shippingFee)}</span>
           </h4>
         </article>
-        <Link to="/checkout" className="btn">
-          proceed to checkout
-        </Link>
+        {user ? (
+          <Link to="/checkout" className="btn">
+            proceed to checkout
+          </Link>
+        ) : (
+          <button type="button" className="btn" onClick={loginWithRedirect}>
+            login
+          </button>
+        )}
       </div>
     </Wrapper>
   );
