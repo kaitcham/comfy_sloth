@@ -9,10 +9,12 @@ import {
   Cart,
   Checkout,
   ErrorPage,
+  AuthWrapper,
+  PrivateRoute,
 } from './pages';
 
 const App = () => (
-  <div>
+  <AuthWrapper>
     <BrowserRouter>
       <Navbar />
       <MobileMenu />
@@ -22,12 +24,19 @@ const App = () => (
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route
+          path="/checkout"
+          element={(
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          )}
+        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
-  </div>
+  </AuthWrapper>
 );
 
 export default App;
