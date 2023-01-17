@@ -1,6 +1,34 @@
-# Getting Started with Create React App
+# Comfy Sloth
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![screenshot](https://res.cloudinary.com/drapvegx8/image/upload/v1673966781/Projects/comfy_sloth_xh7stz.png)
+
+## Description
+
+Comfy Sloth is a furniture store that sells the best furniture for your home.
+
+## Live Demo
+
+[Comfy-sloth](https://kaitcham-comfy-sloth.netlify.app/)
+
+## Built With
+
+- Database: MangoDB
+- Framework: React.js
+- Languages: Javascript, Node.js
+- Libraries: Express, Mangoose, Redux toolkit, Stripe, Auth0...
+- Tested with: - ESLint (JavaScript linting), Stylelint (style linting), Jest (React snapshot testing)
+
+### Setup
+
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Install
+
+- Clone the repository using `git clone git@github.com:kaitcham/comfy-sloth.git`
+- Change directory into the project folder: `cd comfy-sloth`
+- Run `npm install`
+- Run `npm start`
+- A new browser will open automatically with application loaded
 
 ## Available Scripts
 
@@ -39,32 +67,28 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Author
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+👤 **Munezero Christian**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- GitHub: [@kaitcham](https://github.com/kaitcham)
+- Twitter: [@kaitcham](https://twitter.com/kaitcham)
+- LinkedIn: [kaitcham](https://www.linkedin.com/in/kaitcham/)
 
-### Code Splitting
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Contributions, issues, and feature requests are welcome!
 
-### Analyzing the Bundle Size
+Feel free to check the [issues page](https://github.com/kaitcham/travelers/issues).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Show your support
 
-### Making a Progressive Web App
+Give a ⭐️ if you like this project!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Acknowledgments
 
-### Advanced Configuration
+[John Smilga](https://github.com/john-smilga)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📝 License
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is [MIT](./license.md) licensed.
