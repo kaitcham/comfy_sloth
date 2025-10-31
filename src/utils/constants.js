@@ -39,6 +39,6 @@ export const services = [
   },
 ];
 
-export const productsUrl = 'https://course-api.com/react-store-products';
+export const productsUrl = 'https://www.course-api.com/react-store-products';
 
-export const singleProductUrl = 'https://course-api.com/react-store-single-product?id=';
+export const singleProductUrl = 'https://www.course-api.com/react-store-single-product?id=';
